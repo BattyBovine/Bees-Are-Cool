@@ -1,4 +1,4 @@
-//revision 1.6
+//revision 1.61
 
 //REPORT ISSUES IN https://github.com/SpiritAxolotl/Bees-Are-Cool/issues
 
@@ -99,18 +99,21 @@ const copyThePasta = () => {
   const submit = () => {
     console.log("attempting to submit");
     if (
-      document.querySelector("#spinner").hidden &&
-      document.getElementById("00N1K00000fGn13") &&
-      document.getElementById("00N1K00000fGn13").value === "") {
+     document.querySelector("#spinner").hidden &&
+     document.getElementById("00N1K00000fGn13") &&
+     document.getElementById("00N1K00000fGn13").value === "") {
       randomSchool();
-      cansubmit = true;
-      submitbutton.disabled = null;
-    } else if (cansubmit) {
+    }
+    console.log(cansubmit);
+    submitbutton.disabled = null;
+    if (cansubmit) {
       submitbutton.click();
-      console.log("done!");
+      //console.log("done!");
       clearInterval(s);
     } else {
       console.log("failed...");
+      if (!document.getElementById("00N1K00000fGn13")?.value !== "")
+        cansubmit = true;
     }
   }
   
