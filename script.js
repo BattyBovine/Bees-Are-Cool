@@ -1,4 +1,4 @@
-//revision 1.1
+//revision 1.2
 //might modify in future
 //YOU WILL NEED TO DO THE CAPTCHA YOURSELF
 
@@ -33,7 +33,12 @@ document.head.appendChild(styles);
 
 //chooses random "school"
 const selectschool = document.getElementById("00N1K00000fGn13");
-selectschool.value = selectschool.children[Math.floor(Math.random()*selectschool.children.length)].value;
+const randomschool = selectschool.children[Math.floor(Math.random()*selectschool.children.length)].value;
+const selectedschoolbutton = document.querySelector(`[data-id="00N1K00000fGn13"] .filter-option-inner-inner`);
+selectschool.value = randomschool;
+selectschool.title = randomschool;
+selectedschoolbutton.title = randomschool;
+selectedschoolbutton.innerHTML = randomschool;
 
 //list of boxes to check based on their ID
 //might make this more customizable for non-programmers in the future
