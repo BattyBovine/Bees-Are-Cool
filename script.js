@@ -1,4 +1,4 @@
-//revision 1.61
+//revision 1.6.2
 
 //REPORT ISSUES IN https://github.com/SpiritAxolotl/Bees-Are-Cool/issues
 
@@ -37,7 +37,7 @@ let repeat = 10;
 
 const copyThePasta = () => {
   //css edits that will make your scrolling experience better
-  styles = document.createElement("style");
+  const styles = document.createElement("style");
   styles.innerHTML =
     `/*clamps text boxes*/
     .ql-editor {
