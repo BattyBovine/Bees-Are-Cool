@@ -1,4 +1,4 @@
-//revision 1.2
+//revision 1.3
 //might modify in future
 //YOU WILL NEED TO DO THE CAPTCHA YOURSELF
 
@@ -25,8 +25,13 @@ const repeat = 10;
 //css edits that will make your scrolling experience better
 styles = document.createElement("style");
 styles.innerHTML = `
+  /*clamps text boxes*/
   .ql-editor {
     max-height: 200px;
+  }
+  /*fixes the word wrap*/
+  #form-row > form {
+    max-width: 100%;
   }
 `;
 document.head.appendChild(styles);
@@ -68,11 +73,21 @@ for (const input of editables2)
   input.value = copypasta.repeat(repeat);
 
 //scrolls to bottom of the page (to make it easier to just click the captcha)
-window.scrollTo(0, document.body.scrollHeight);
+//commented out for reasons you will read below
+//window.scrollTo(0, document.body.scrollHeight);
 
 //uncomment if you want it to auto-click the captcha. will most likely make you do the infamous click the boxes test so I don't recommend it
 //UPDATE: this gets blocked anyways cuz of cors so i HIGHLY recommend not using it. keeping it for tech nerds to see how you would otherwise do it
 //document.querySelector(`iframe[title="reCAPTCHA"]`).contentWindow.document.querySelector(".rc-anchor-content").click();
+
+//LMAOOOOOO YOU CAN JUST ENABLE THE BUTTON AND YOU CAN SKIP THE CAPTCHA
+const submitbutton = document.querySelector("#btn-submit-complaint2");
+submitbutton.disabled = null;
+//hiding the captcha since you actually don't need it now
+document.querySelector(`.g-recaptcha`).style.display = "none";
+
+//comment out if you want a chance to read everything and then manually submitting
+submitbutton.click();
 
 //prevents the console output value from being whatever your copypasta was lmfao
 console.log("real");
