@@ -1,4 +1,4 @@
-//revision 1
+//revision 1.1
 //might modify in future
 //YOU WILL NEED TO DO THE CAPTCHA YOURSELF
 
@@ -36,7 +36,9 @@ const selectschool = document.getElementById("00N1K00000fGn13");
 selectschool.value = selectschool.children[Math.floor(Math.random()*selectschool.children.length)].value;
 
 //list of boxes to check based on their ID
+//might make this more customizable for non-programmers in the future
 const checkids = [
+  "cb1",
   "cb8",
   "00N1K00000fXXY0",
   "may-not-disclose-to-third-party",
