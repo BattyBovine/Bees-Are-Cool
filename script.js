@@ -1,6 +1,6 @@
-//revision 1.4
+//revision 1.5
 
-//REPORT ANY ISSUES IN THE COMMENTS
+//REPORT ISSUES IN https://github.com/SpiritAxolotl/Bees-Are-Cool/issues
 
 //for use on https://ut-sao-special-prod.web.app/sex_basis_complaint2.html
 //open the console by either F12 or ctrl alt i (or cmd opt i on macos). you can also right click and select "inspect"
@@ -14,16 +14,15 @@
 //here's the bee movie script (close to 50k characters total): https://gist.githubusercontent.com/MattIPv4/045239bc27b16b2bcf7a3a9a4648c08a/raw/2411e31293a35f3e565f61e7490a806d4720ea7e/bee%2520movie%2520script
 //tip for gen alpha: use ctrl A (or cmd A on mac) to select all text easily
 //paste the contents of that link (or your preferred copypasta) in between the ``s
-const copypasta = ``;
-//might make that an xmp request or whatever but we'll see
+let copypasta = ``;
 
-//number of times to repeat the script
-const repeat = 10;
+//number of times to repeat the copypasta
+let repeat = 10;
 
 //css edits that will make your scrolling experience better
 styles = document.createElement("style");
-styles.innerHTML = `
-  /*clamps text boxes*/
+styles.innerHTML =
+  `/*clamps text boxes*/
   .ql-editor {
     max-height: 200px;
   }
@@ -31,7 +30,8 @@ styles.innerHTML = `
   #form-row > form {
     max-width: 100%;
   }
-`;
+`.replaceAll(/(?<=\n)\s{2}/g, "");
+//that last .replaceAll just removes the leading two spaces for each line
 document.head.appendChild(styles);
 
 //chooses random "school"
