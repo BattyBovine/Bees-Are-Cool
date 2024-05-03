@@ -1,12 +1,10 @@
-//revision 1.3
-//might modify in future
-//YOU WILL NEED TO DO THE CAPTCHA YOURSELF
+//revision 1.4
 
 //REPORT ANY ISSUES IN THE COMMENTS
 
 //for use on https://ut-sao-special-prod.web.app/sex_basis_complaint2.html
 //open the console by either F12 or ctrl alt i (or cmd opt i on macos). you can also right click and select "inspect"
-//make sure "console" is selected from the top and paste all of this into the text box near the bottom
+//make sure "console" is selected from the top and paste all of this into the text box near the bottom (make sure to edit the "copypasta" variable on line 17 and the "repeat" variable on line 21)
 //everything is commented so you can make sure it doesn't do anything malicious
 //I still don't recommend running random code from strangers (me included) unless you trust them
 //so yeah thank you for trusting me 🙏
