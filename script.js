@@ -1,4 +1,4 @@
-//revision 1.9
+//revision 2.0
 
 //REPORT ISSUES IN https://github.com/SpiritAxolotl/Bees-Are-Cool/issues
 
@@ -11,7 +11,10 @@
 //also you should probably do this on a vpn or something, just to be safe
 
 //change this to true if you want the success page to redirect back to the form (WILL BE AN INFINITE LOOP)
-let redirectsuccess = false;
+let redirectsuccess = true;
+
+//change this to false if you don't want it to autosubmit forms. if set to false, it will also autoscroll to the bottom of the page to make your life just a lil easier :]
+let autosubmit = true;
 
 const log = (...args) => {
   console.log(`BAC: ${args}`);
@@ -115,14 +118,22 @@ const copyThePasta = () => {
       cansubmit = true;
     
     if (cansubmit) {
-      submitbutton.click();
-      log("submitted!");
-      //local stats to see how many times you've submitted :p
-      localStorage.setItem("numberOfSubmissions", +(localStorage.getItem("numberOfSubmissions") ?? 0) + 1);
+      submitbutton.onclick = (e) => {
+        log("BUTTON CLICKED");
+        //prevents clicking the button multiple times (saves me the headache of fully foolproofing numberOfSubmissions)
+        submitbutton.disabled = true;
+        //local stats to see how many times you've submitted :p
+        localStorage.setItem("numberOfSubmissions", +(localStorage.getItem("numberOfSubmissions") ?? 0) + 1);
+      };
+      if (autosubmit) {
+        submitbutton.click();
+        log("submitted!");
+      } else {
+        log("done!");
+        window.scrollTo(0, document.body.scrollHeight);
+      }
       clearInterval(s);
-    } else {
-      log("failed...");
-    }
+    } else log("failed...");
   }
   
   //comment out if you want a chance to read everything and manually submitting
