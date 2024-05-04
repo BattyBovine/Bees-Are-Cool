@@ -1,4 +1,4 @@
-//revision 2.3
+//revision 2.3.1
 
 //REPORT ISSUES IN https://github.com/SpiritAxolotl/Bees-Are-Cool/issues
 
@@ -206,7 +206,7 @@ const check = () => {
       document.querySelector("#totalChars")?.append(h4);
     }
     
-    if (redirectsuccess)
+    if (redirectsuccess && !(new URLSearchParams(window.location.search)).has("noredirect"))
       window.location.href = "https://ut-sao-special-prod.web.app/sex_basis_complaint2.html";
   } else if (window.location.href.match(/https?:\/\/webto.salesforce.com\/servlet\/servlet.WebToCase/g)) {
     window.location.href = "https://ut-sao-special-prod.web.app/sex_basis_complaint2.html";
