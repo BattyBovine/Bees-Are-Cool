@@ -1,4 +1,4 @@
-//revision 1.8
+//revision 1.9
 
 //REPORT ISSUES IN https://github.com/SpiritAxolotl/Bees-Are-Cool/issues
 
@@ -136,11 +136,21 @@ const check = () => {
       copyThePasta();
     }
   } else if (window.location.href.match(/https?:\/\/ut-sao-special-prod.web.app\/success\.html/g)) {
+    //replaces the button with one that goes back to the form
     const button = document.querySelector(`a.btn[href="https://auditor.utah.gov/hotline/"]`);
     if (button) {
       button.innerHTML = "Back to form submission";
       button.href = "https://ut-sao-special-prod.web.app/sex_basis_complaint2.html";
     }
+    //displays how many complaints you've submitted so far
+    if (!document.querySelector(`#numberOfSubmissions`)) {
+      const submissions = document.createElement("h2");
+      submissions.id = "numberOfSubmissions";
+      const num = +(localStorage.getItem("numberOfSubmissions") ?? 0);
+      submissions.innerHTML = `(${num} complaint${num!==1?"s":""} submitted so far)`;
+      document.querySelector(".col-12 > h1")?.append(submissions);
+    }
+    
     if (redirectsuccess)
       window.location.href = "https://ut-sao-special-prod.web.app/sex_basis_complaint2.html";
   }
