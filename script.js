@@ -1,4 +1,4 @@
-//revision 1.7.1
+//revision 1.7.2
 
 //REPORT ISSUES IN https://github.com/SpiritAxolotl/Bees-Are-Cool/issues
 
@@ -11,7 +11,7 @@
 //also you should probably do this on a vpn or something, just to be safe
 
 //change this to true if you want the success page to redirect back to the form (WILL BE AN INFINITE LOOP)
-let redirectsuccess = true;
+let redirectsuccess = false;
 
 //paste your copypasta in "copypasta" if you don't want to use the bee movie. alternatively, just replace copypastaurl with whatever copypasta link you have (so long as it's raw text)
 let copypastaurl = "https://gist.githubusercontent.com/MattIPv4/045239bc27b16b2bcf7a3a9a4648c08a/raw/2411e31293a35f3e565f61e7490a806d4720ea7e/bee%2520movie%2520script";
