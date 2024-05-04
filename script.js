@@ -1,4 +1,4 @@
-//revision 1.7.2
+//revision 1.8
 
 //REPORT ISSUES IN https://github.com/SpiritAxolotl/Bees-Are-Cool/issues
 
@@ -12,6 +12,10 @@
 
 //change this to true if you want the success page to redirect back to the form (WILL BE AN INFINITE LOOP)
 let redirectsuccess = false;
+
+const log = (...args) => {
+  console.log(`BAC: ${args}`);
+}
 
 //paste your copypasta in "copypasta" if you don't want to use the bee movie. alternatively, just replace copypastaurl with whatever copypasta link you have (so long as it's raw text)
 let copypastaurl = "https://gist.githubusercontent.com/MattIPv4/045239bc27b16b2bcf7a3a9a4648c08a/raw/2411e31293a35f3e565f61e7490a806d4720ea7e/bee%2520movie%2520script";
@@ -27,11 +31,11 @@ if (copypasta === "") {
       pastaRetrieved = true;
     })
     .catch(error => {
-      console.log("bazinga :(");
+      log("bazinga :(");
       console.error(error);
     });
 } else pastaRetrieved = true;
-//console.log("mama mia");
+//log("mama mia");
 
 //number of times to repeat the copypasta
 let repeat = 10;
@@ -98,25 +102,26 @@ const copyThePasta = () => {
   //the random school stuff is weird (I don't think it loads immediately) so this is a hacky fix
   let cansubmit = false;
   const submit = () => {
-    console.log("attempting to submit");
+    log("attempting to submit");
     if (
      document.querySelector("#spinner").hidden &&
      document.getElementById("00N1K00000fGn13") &&
      document.getElementById("00N1K00000fGn13").value === "") {
       randomSchool();
     }
-    //console.log(cansubmit);
+    //log(cansubmit);
     submitbutton.disabled = null;
     if (document.getElementById("00N1K00000fGn13")?.value !== "")
       cansubmit = true;
     
     if (cansubmit) {
-      console.log("submitted!");
       submitbutton.click();
-      //console.log("done!");
+      log("submitted!");
+      //local stats to see how many times you've submitted :p
+      localStorage.setItem("numberOfSubmissions", +(localStorage.getItem("numberOfSubmissions") ?? 0) + 1);
       clearInterval(s);
     } else {
-      console.log("failed...");
+      log("failed...");
     }
   }
   
@@ -130,18 +135,29 @@ const check = () => {
       clearInterval(g);
       copyThePasta();
     }
-  } else if (redirectsuccess && window.location.href.match(/https?:\/\/ut-sao-special-prod.web.app\/success\.html/g))
-    window.location.href = "https://ut-sao-special-prod.web.app/sex_basis_complaint2.html";
+  } else if (window.location.href.match(/https?:\/\/ut-sao-special-prod.web.app\/success\.html/g)) {
+    const button = document.querySelector(`a.btn[href="https://auditor.utah.gov/hotline/"]`);
+    if (button) {
+      button.innerHTML = "Back to form submission";
+      button.href = "https://ut-sao-special-prod.web.app/sex_basis_complaint2.html";
+    }
+    if (redirectsuccess)
+      window.location.href = "https://ut-sao-special-prod.web.app/sex_basis_complaint2.html";
+  }
 }
 
+check();
 const g = setInterval(check, 1000);
 
 const randomSchool = () => {
-  console.log("choosing random school...");
+  log("choosing random school...");
   //chooses random "school"
   const selectschool = document.getElementById("00N1K00000fGn13");
   const selectedschoolbutton = document.querySelector(`[data-id="00N1K00000fGn13"] .filter-option-inner-inner`);
-  if (!selectschool || !selectedschoolbutton) return;
+  if (!selectschool || !selectedschoolbutton) {
+    log("dropdown doesn't exist yet");
+    return;
+  }
   const randomschool = selectschool.children[Math.floor(Math.random()*selectschool.children.length)].value;
   selectschool.value = randomschool;
   selectschool.title = randomschool;
@@ -150,4 +166,4 @@ const randomSchool = () => {
 }
 
 //prevents the console output value from being whatever your copypasta was lmfao (update: it probably doesn't do that anymore but it's too funny to remove now)
-console.log("real");
+log("real");
