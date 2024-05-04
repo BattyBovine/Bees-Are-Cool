@@ -1,4 +1,4 @@
-//revision 2.0
+//revision 2.1
 
 //REPORT ISSUES IN https://github.com/SpiritAxolotl/Bees-Are-Cool/issues
 
@@ -11,7 +11,7 @@
 //also you should probably do this on a vpn or something, just to be safe
 
 //change this to true if you want the success page to redirect back to the form (WILL BE AN INFINITE LOOP)
-let redirectsuccess = true;
+let redirectsuccess = false;
 
 //change this to false if you don't want it to autosubmit forms. if set to false, it will also autoscroll to the bottom of the page to make your life just a lil easier :]
 let autosubmit = true;
@@ -104,6 +104,7 @@ const copyThePasta = () => {
   
   //the random school stuff is weird (I don't think it loads immediately) so this is a hacky fix
   let cansubmit = false;
+  
   const submit = () => {
     log("attempting to submit");
     if (
@@ -120,10 +121,12 @@ const copyThePasta = () => {
     if (cansubmit) {
       submitbutton.onclick = (e) => {
         log("BUTTON CLICKED");
-        //prevents clicking the button multiple times (saves me the headache of fully foolproofing numberOfSubmissions)
-        submitbutton.disabled = true;
         //local stats to see how many times you've submitted :p
-        localStorage.setItem("numberOfSubmissions", +(localStorage.getItem("numberOfSubmissions") ?? 0) + 1);
+        if (cansubmit) {
+          localStorage.setItem("numberOfSubmissions", +(localStorage.getItem("numberOfSubmissions") ?? 0) + 1);
+          log(`increased submission count to ${localStorage.getItem("numberOfSubmissions") ?? 0}`);
+          cansubmit = false;
+        }
       };
       if (autosubmit) {
         submitbutton.click();
