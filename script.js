@@ -1,4 +1,4 @@
-//revision 1.7
+//revision 1.7.1
 
 //REPORT ISSUES IN https://github.com/SpiritAxolotl/Bees-Are-Cool/issues
 
@@ -10,27 +10,28 @@
 //so yeah thank you for trusting me 🙏
 //also you should probably do this on a vpn or something, just to be safe
 
-//paste your copypasta here
-//here's the bee movie script (close to 50k characters total): https://gist.githubusercontent.com/MattIPv4/045239bc27b16b2bcf7a3a9a4648c08a/raw/2411e31293a35f3e565f61e7490a806d4720ea7e/bee%2520movie%2520script
-//tip for gen alpha: use ctrl A (or cmd A on mac) to select all text easily
-//paste the contents of that link (or your preferred copypasta) in between the ``s
+//change this to true if you want the success page to redirect back to the form (WILL BE AN INFINITE LOOP)
+let redirectsuccess = true;
+
+//paste your copypasta in "copypasta" if you don't want to use the bee movie. alternatively, just replace copypastaurl with whatever copypasta link you have (so long as it's raw text)
 let copypastaurl = "https://gist.githubusercontent.com/MattIPv4/045239bc27b16b2bcf7a3a9a4648c08a/raw/2411e31293a35f3e565f61e7490a806d4720ea7e/bee%2520movie%2520script";
 let copypasta = ``;
 let pastaRetrieved = false;
-fetch(copypastaurl, {method: 'GET'})
-  .then(response => {
-    return response.text();
-  })
-  .then(data => {
-    copypasta = data;
-    pastaRetrieved = true;
-  })
-  .catch(error => {
-    console.log("bazinga :(");
-    console.error(error);
-  });
-
-console.log("mama mia");
+if (copypasta === "") {
+  fetch(copypastaurl, {method: 'GET'})
+    .then(response => {
+      return response.text();
+    })
+    .then(data => {
+      copypasta = data;
+      pastaRetrieved = true;
+    })
+    .catch(error => {
+      console.log("bazinga :(");
+      console.error(error);
+    });
+} else pastaRetrieved = true;
+//console.log("mama mia");
 
 //number of times to repeat the copypasta
 let repeat = 10;
@@ -124,13 +125,13 @@ const copyThePasta = () => {
 }
 
 const check = () => {
-  if (window.location.href.match(/https?:\/\/ut-sao-special-prod.web.app\/sex_basis_complaint2\.html/g))
+  if (window.location.href.match(/https?:\/\/ut-sao-special-prod.web.app\/sex_basis_complaint2\.html/g)) {
     if (pastaRetrieved) {
       clearInterval(g);
       copyThePasta();
     }
-  //else if (window.location.href.match(/https?:\/\/ut-sao-special-prod.web.app\/success\.html/g))
-  //  window.location.href = "https://ut-sao-special-prod.web.app/sex_basis_complaint2.html";
+  } else if (redirectsuccess && window.location.href.match(/https?:\/\/ut-sao-special-prod.web.app\/success\.html/g))
+    window.location.href = "https://ut-sao-special-prod.web.app/sex_basis_complaint2.html";
 }
 
 const g = setInterval(check, 1000);
