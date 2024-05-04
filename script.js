@@ -1,4 +1,4 @@
-//revision 2.1
+//revision 2.2
 
 //REPORT ISSUES IN https://github.com/SpiritAxolotl/Bees-Are-Cool/issues
 
@@ -20,6 +20,9 @@ const log = (...args) => {
   console.log(`BAC: ${args}`);
 }
 
+//number of times to repeat the copypasta
+let repeat = 10;
+
 //paste your copypasta in "copypasta" if you don't want to use the bee movie. alternatively, just replace copypastaurl with whatever copypasta link you have (so long as it's raw text)
 let copypastaurl = "https://gist.githubusercontent.com/MattIPv4/045239bc27b16b2bcf7a3a9a4648c08a/raw/2411e31293a35f3e565f61e7490a806d4720ea7e/bee%2520movie%2520script";
 let copypasta = ``;
@@ -39,9 +42,6 @@ if (copypasta === "") {
     });
 } else pastaRetrieved = true;
 //log("mama mia");
-
-//number of times to repeat the copypasta
-let repeat = 10;
 
 const copyThePasta = () => {
   //css edits that will make your scrolling experience better
@@ -83,6 +83,11 @@ const copyThePasta = () => {
   //sets the input boxes to the copypastas (repeating for the number specified)
   const editables = Array.from(document.querySelectorAll(`[contenteditable="true"]`));
   const editables2 = Array.from(document.querySelectorAll(`:not(.ql-hidden) > input[type="text"]`));
+  //stats about how many characters you're submitting
+  const totalchars = (editables.length+editables2.length)*copypasta.length*repeat;
+  log(`total characters being submitted: ${totalchars.toLocaleString()}\n` +
+  `(${(editables.length+editables2.length).toLocaleString()} text boxes, ${copypasta.length.toLocaleString()} copypasta characters, ${repeat.toLocaleString()} repeats)`);
+  localStorage.setItem("totalChars", +(localStorage.getItem("totalChars") ?? 0) + totalchars);
   for (const input of editables)
     input.innerHTML = `<p>${copypasta.repeat(repeat)}</p>`;
   for (const input of editables2)
@@ -133,8 +138,8 @@ const copyThePasta = () => {
         log("submitted!");
       } else {
         log("done!");
-        window.scrollTo(0, document.body.scrollHeight);
       }
+      window.scrollTo(0, document.body.scrollHeight);
       clearInterval(s);
     } else log("failed...");
   }
@@ -161,8 +166,15 @@ const check = () => {
       const submissions = document.createElement("h2");
       submissions.id = "numberOfSubmissions";
       const num = +(localStorage.getItem("numberOfSubmissions") ?? 0);
-      submissions.innerHTML = `(${num} complaint${num!==1?"s":""} submitted so far)`;
+      submissions.innerHTML = `(${num.toLocaleString()} complaint${num!==1?"s":""} submitted so far)`;
       document.querySelector(".col-12 > h1")?.append(submissions);
+    }
+    if (!document.querySelector(`#totalChars`)) {
+      const chars = document.createElement("h3");
+      chars.id = "totalChars";
+      const num = +(localStorage.getItem("totalChars") ?? 0);
+      chars.innerHTML = `(and ${num.toLocaleString()} character${num!==1?"s":""} submitted so far)`;
+      document.querySelector("#numberOfSubmissions")?.append(chars);
     }
     
     if (redirectsuccess)
