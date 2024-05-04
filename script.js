@@ -1,4 +1,4 @@
-//revision 2.2
+//revision 2.3
 
 //REPORT ISSUES IN https://github.com/SpiritAxolotl/Bees-Are-Cool/issues
 
@@ -128,9 +128,12 @@ const copyThePasta = () => {
         log("BUTTON CLICKED");
         //local stats to see how many times you've submitted :p
         if (cansubmit) {
+          cansubmit = false;
+          const start = Date.now()/1000;
+          localStorage.setItem("startAvg", start);
+          log(`stopwatch started`);
           localStorage.setItem("numberOfSubmissions", +(localStorage.getItem("numberOfSubmissions") ?? 0) + 1);
           log(`increased submission count to ${localStorage.getItem("numberOfSubmissions") ?? 0}`);
-          cansubmit = false;
         }
       };
       if (autosubmit) {
@@ -163,22 +166,50 @@ const check = () => {
     }
     //displays how many complaints you've submitted so far
     if (!document.querySelector(`#numberOfSubmissions`)) {
-      const submissions = document.createElement("h2");
-      submissions.id = "numberOfSubmissions";
-      const num = +(localStorage.getItem("numberOfSubmissions") ?? 0);
-      submissions.innerHTML = `(${num.toLocaleString()} complaint${num!==1?"s":""} submitted so far)`;
-      document.querySelector(".col-12 > h1")?.append(submissions);
+      const h2 = document.createElement("h2");
+      h2.id = "numberOfSubmissions";
+      const submissions = +(localStorage.getItem("numberOfSubmissions") ?? 0);
+      h2.innerHTML = `(${submissions.toLocaleString()} complaint${submissions!==1?"s":""} submitted so far)`;
+      document.querySelector(".col-12 > h1")?.append(h2);
     }
+    //displays how many total characters you've submitted so far
     if (!document.querySelector(`#totalChars`)) {
-      const chars = document.createElement("h3");
-      chars.id = "totalChars";
-      const num = +(localStorage.getItem("totalChars") ?? 0);
-      chars.innerHTML = `(and ${num.toLocaleString()} character${num!==1?"s":""} submitted so far)`;
-      document.querySelector("#numberOfSubmissions")?.append(chars);
+      const h3 = document.createElement("h3");
+      h3.id = "totalChars";
+      const chars = +(localStorage.getItem("totalChars") ?? 0);
+      h3.innerHTML = `(and ${chars.toLocaleString()} character${chars!==1?"s":""} submitted so far)`;
+      document.querySelector("#numberOfSubmissions")?.append(h3);
+    }
+    //calculates and shows the average time it takes to submit each form
+    if (!document.querySelector(`#avgTimeToSubmit`)) {
+      const end = Date.now()/1000;
+      const start = +(localStorage.getItem("startAvg") ?? 0);
+      if (start) {
+        localStorage.removeItem("startAvg");
+        log(`stopwatch stopped at ${end-start}`);
+        const oldavg = +(localStorage.getItem("avgTimeToSubmit") ?? 0);
+        const submissions = +(localStorage.getItem("numberOfSubmissions") ?? 0);
+        if (oldavg) {
+          localStorage.setItem("avgTimeToSubmit",
+            ((end - start) + (oldavg * (submissions-1)))/submissions
+          );
+        } else {
+          localStorage.setItem("avgTimeToSubmit",
+            (end - start) / submissions
+          );
+        }
+      }
+      const h4 = document.createElement("h4");
+      h4.id = "avgTimeToSubmit";
+      const avg = Math.round(+(localStorage.getItem("avgTimeToSubmit") ?? 0));
+      h4.innerHTML = `(with ${avg>=60 ? `${Math.floor(avg/60)} minute${Math.floor(avg/60)!==1?"s":""} and ` : ""}${avg%60} second${avg%60!==1?"s":""} on average to submit)`;
+      document.querySelector("#totalChars")?.append(h4);
     }
     
     if (redirectsuccess)
       window.location.href = "https://ut-sao-special-prod.web.app/sex_basis_complaint2.html";
+  } else if (window.location.href.match(/https?:\/\/webto.salesforce.com\/servlet\/servlet.WebToCase/g)) {
+    window.location.href = "https://ut-sao-special-prod.web.app/sex_basis_complaint2.html";
   }
 }
 
