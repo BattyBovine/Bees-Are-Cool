@@ -1,4 +1,4 @@
-//revision 1.6.2
+//revision 1.7
 
 //REPORT ISSUES IN https://github.com/SpiritAxolotl/Bees-Are-Cool/issues
 
@@ -104,16 +104,18 @@ const copyThePasta = () => {
      document.getElementById("00N1K00000fGn13").value === "") {
       randomSchool();
     }
-    console.log(cansubmit);
+    //console.log(cansubmit);
     submitbutton.disabled = null;
+    if (document.getElementById("00N1K00000fGn13")?.value !== "")
+      cansubmit = true;
+    
     if (cansubmit) {
+      console.log("submitted!");
       submitbutton.click();
       //console.log("done!");
       clearInterval(s);
     } else {
       console.log("failed...");
-      if (!document.getElementById("00N1K00000fGn13")?.value !== "")
-        cansubmit = true;
     }
   }
   
@@ -134,10 +136,12 @@ const check = () => {
 const g = setInterval(check, 1000);
 
 const randomSchool = () => {
+  console.log("choosing random school...");
   //chooses random "school"
   const selectschool = document.getElementById("00N1K00000fGn13");
-  const randomschool = selectschool.children[Math.floor(Math.random()*selectschool.children.length)].value;
   const selectedschoolbutton = document.querySelector(`[data-id="00N1K00000fGn13"] .filter-option-inner-inner`);
+  if (!selectschool || !selectedschoolbutton) return;
+  const randomschool = selectschool.children[Math.floor(Math.random()*selectschool.children.length)].value;
   selectschool.value = randomschool;
   selectschool.title = randomschool;
   selectedschoolbutton.title = randomschool;
